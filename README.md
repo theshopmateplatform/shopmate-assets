@@ -5,7 +5,13 @@ Static asset service for the Shopmate platform. Currently hosts **fonts**; other
 ## Stack
 
 Plain static files + a small dependency-free Node (>=20) build script. No runtime server.
-Intended hosting: S3 + CloudFront (long-lived immutable caching, CORS for storefront/admin origins).
+Delivery: GitHub-backed CDN. Files are served straight from the repo via jsDelivr (versioned by git tag, immutable caching, CORS enabled):
+
+```
+https://cdn.jsdelivr.net/gh/theshopmateplatform/shopmate-assets@<tag>/fonts/<family>/<file>.woff2
+```
+
+Always pin a release tag (e.g. `v1.0.0`) in consumers, never `@main`, so cached URLs stay immutable. Requires the repo to be public. Do not use `raw.githubusercontent.com` in production (rate-limited, not a CDN).
 
 ## Layout
 
