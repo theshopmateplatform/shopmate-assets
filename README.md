@@ -16,7 +16,8 @@ Always pin a release tag (e.g. `v1.0.0`) in consumers, never `@main`, so cached 
 ## Layout
 
 ```
-fonts/<family>/<file>.woff2   # self-hosted font files
+fonts/<family>/<file>.woff2   # self-hosted font files (+ <family>.css @font-face, ofl.txt)
+demo/index.html               # font specimen page, open locally to preview
 scripts/build.mjs             # validates assets, generates dist/ + manifest.json
 ```
 
@@ -27,9 +28,20 @@ npm run validate   # lint file names, extensions, sizes
 npm run build      # outputs dist/ with manifest.json (path, size, sha256)
 ```
 
+## Sample: Poppins
+
+`fonts/poppins/` ships Poppins (latin, weights 400/500/600/700) with a ready-made `poppins.css`.
+Consume it with one tag, pinned to a release:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theshopmateplatform/shopmate-assets@v0.1.0/fonts/poppins/poppins.css" />
+```
+
+Preview locally: `npx serve .` then open `/demo/`.
+
 ## Adding a font
 
-1. Add files under `fonts/<family>/` (prefer `.woff2`; lowercase names, max 2 MB).
+1. Add files under `fonts/<family>/` (prefer `.woff2`; lowercase names, max 2 MB), plus a `<family>.css` and the font's licence file.
 2. Run `npm run validate`.
 3. Open a PR; CI runs the same checks.
 

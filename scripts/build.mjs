@@ -8,7 +8,7 @@ import path from 'node:path';
 const ROOT = path.resolve(import.meta.dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 const CATEGORIES = ['fonts'];
-const ALLOWED = { fonts: ['.woff2', '.woff', '.ttf', '.otf'] };
+const ALLOWED = { fonts: ['.woff2', '.woff', '.ttf', '.otf', '.css', '.txt'] };
 const MAX_BYTES = 2 * 1024 * 1024;
 const NAME_RE = /^[a-z0-9][a-z0-9._-]*$/;
 const checkOnly = process.argv.includes('--check');
@@ -54,6 +54,7 @@ if (!checkOnly) {
   for (const category of CATEGORIES) {
     await cp(path.join(ROOT, category), path.join(DIST, category), { recursive: true });
   }
+  await cp(path.join(ROOT, 'demo'), path.join(DIST, 'demo'), { recursive: true });
   await writeFile(path.join(DIST, 'manifest.json'), JSON.stringify(manifest, null, 2));
 }
 console.log(`OK: ${manifest.assets.length} asset(s)${checkOnly ? ' validated' : ' built to dist/'}`);
